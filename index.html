@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="no-referrer"><meta name="description" content="Choose the defense, play the action and compare the offensive reads on a five-on-five coaching board."><title>5 Twice | Coaching board</title><style>
+:root{color-scheme:light;--background:#fffcf6;--foreground:#182a34;--border:#bcc8c6;--viz-series-1:#b05013;--viz-series-2:#246980;--orange:#ec740d;--font-size-base:16px;font-family:system-ui,-apple-system,sans-serif;color:var(--foreground);background:#eeeee7}
+*{box-sizing:border-box}body{margin:auto;max-width:44rem;padding:1rem}main{background:var(--background);padding:clamp(1rem,4vw,2.3rem);border-radius:1.25rem;border:1px solid #d4d8ce}nav,.toolbar,.viz-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}nav{margin:0 0 .8rem}nav span{font-size:.75rem;font-weight:750;color:#4c5c58;letter-spacing:.09em}nav a{background:#fffaf1;color:#253c42;border:1px solid #becbc4;border-radius:2rem;padding:.45rem .75rem;text-decoration:none;font-weight:650}nav a[aria-current=page]{background:#1e4241;color:white}h1{font-size:clamp(2rem,6vw,3.3rem);line-height:1.04;letter-spacing:-.045em;margin:.3rem 0 .45rem}h3{margin:.5rem 0}.intro{font-size:1.05rem;line-height:1.42;margin:0 0 1.2rem}.eyebrow{display:block;text-transform:uppercase;letter-spacing:.09em;font-size:.73rem;font-weight:750;color:#486662}
+label{display:block;font-weight:650;margin:.4rem 0}select,button{font:inherit;min-height:44px}select{display:block;margin:.35rem 0 .65rem;width:100%;padding:.55rem;border:1px solid #849a95;border-radius:.55rem;color:var(--foreground);background:white}button{cursor:pointer;border-radius:.55rem;border:1px solid #aebdb5;background:#fff;color:#243b40;padding:.5rem .8rem;font-weight:600}button.primary,.btn-primary{background:#214c48;color:white;border-color:#214c48}button:disabled{opacity:.45;cursor:default}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #07689c;outline-offset:2px}
+.board,#false-exchange .court{background:#f4eee1;border-radius:.8rem}.board{overflow:hidden;border:1px solid #dbd9c9}svg#floor{display:block;width:100%;max-height:49vh;margin:auto}.lines{fill:none;stroke:#afbab3;stroke-width:1.75}.basket{stroke:#a66c37;stroke-width:2.5}.off,.def{fill:#fffdf6;stroke-width:2.2}.off,.move,.screen{stroke:var(--viz-series-1)}.def{stroke:var(--viz-series-2)}.move{stroke-width:2;opacity:.65}.screen{stroke-width:3.4}.delivery{stroke:#263d40;stroke-width:2;stroke-dasharray:5 5}.ball{fill:var(--orange);stroke:var(--foreground)}.number{font-size:16px;text-anchor:middle;dominant-baseline:central;fill:#102933;font-weight:650}.caption{background:#e7eee6;border-top:1px solid #c6d2c6;padding:.75rem .9rem;line-height:1.45}.caption strong{display:block;font-weight:550;margin-top:.15rem}.toolbar{margin:.8rem 0}.roles,.text-small,footer{font-size:.84rem;line-height:1.5;color:#455c5d}.roles{margin:.5rem 0 1rem}details{margin-top:.4rem;border-top:1px solid var(--border);padding:.55rem 0}summary{cursor:pointer;font-weight:700}details p{line-height:1.5;margin:.6rem .2rem}footer{margin-top:.7rem}#false-exchange .read{line-height:1.4;background:#e7eee6;padding:.7rem;margin:.2rem 0;border-radius:.4rem}@media (max-width:440px){body{padding:.5rem}main{padding:.85rem}nav span{display:none}#floor .number{font-size:18px}}
+</style></head><body><nav aria-label="Playbook"><span>COACHING BOARD</span> <a aria-current="page" href="index.html">5 Twice</a><a href="false-exchange.html">False Exchange</a></nav><main>
+  <header><div class="eyebrow">HALF COURT &nbsp;/&nbsp; AFTER TIMEOUT</div>
+    <h1>5 Twice</h1><p class="intro">Two chances for your shooting big. One empty corner for your guard.</p></header>
+  <label for="coverage">Choose what the defense does</label>
+  <select id="coverage">
+    <option value="first">X5 trails the pindown → 5 shoots</option>
+    <option value="return">X5 helps on the handoff → 5 gets a second three</option>
+    <option value="drive">X5 stays with 5 → 1 drives the empty side</option>
+    <option value="slash">X3 commits to 1 → 3 attacks right</option>
+    <option value="switch">They switch twice → keep it and reverse</option>
+  </select>
+  <div class="board">
+    <svg id="floor" viewBox="0 0 500 358" role="img" aria-labelledby="court-title description">
+      <title id="court-title">5 Twice, ten-player teaching court</title><desc id="description"></desc>
+      <g class="lines"><path d="M4 353V6H496V353ZM170 6V193H330V6 M190 193a60 60 0 0 0 120 0 M26 6V55a224 220 0 0 0 448 0V6"/><path class="basket" d="M229 35h42"/><circle class="basket" cx="250" cy="51" r="8"/></g>
+      <g id="routes" fill="none"></g><path id="delivery" class="delivery" fill="none"/><g id="actors"></g><circle class="ball" id="ball" r="5"/>
+    </svg>
+    <div class="caption"><span class="eyebrow" id="beat"></span><strong id="cue" aria-live="polite"></strong></div>
+  </div>
+  <div class="toolbar"><button id="play" class="primary">Play from start</button><button id="prev">← Back a beat</button><button id="next">Next beat →</button></div>
+  <div class="roles"><b>1</b> Guard · <b>2</b> Two-screen setter · <b>3</b> Right-hand slasher · <b>4</b> Corner shooter · <b>5</b> Shooting big. Squares are defenders.</div>
+  <details open><summary>Timeout call</summary><p>“5 Twice. Right corner empty. Two, pin for five. Five, shoot it or hand it back to one. Two, screen five’s new defender. One, rim or throwback. Three, hold left and attack right if yours helps.”</p></details>
+  <details><summary>Teach the timing</summary><p><b>First window:</b> 5 brushes 2’s planted screen, ready to shoot beyond the right-slot arc. If denied, step toward 1 for a safe catch. If there’s no catch, 1 keeps it; there is no handoff.</p>
+  <p><b>Second window:</b> 1 follows the pass over 5’s outside shoulder. As 1 takes the ball, 2 sets again in the recovery path of whoever is guarding 5. After 1 clears, 5 flares back to the top. Both screens need a legal stationary base, time and space.</p>
+  <p><b>Third player:</b> 3 holds the left wing during 1’s drive. If X3 only stunts, 1 keeps the dribble. On a real commitment, pass before getting trapped below the rim. Once 1 clears, 3 drives right if the middle is available; if X3 takes away that hand, swing it instead.</p></details>
+  <footer>Authored teaching example. The reads show possible windows, not predicted makes or verified game film.</footer>
+</main>
+<script>
+(() => {
+  const get=id=>document.getElementById(id),ns='http://www.w3.org/2000/svg';
+  const el=(tag,attrs={})=>{const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);return n};
+  const court=get('actors'), ball=get('ball'), route=get('routes'), pass=get('delivery'), sel=get('coverage');
+  const ids=['o1','o2','o3','o4','o5','x1','x2','x3','x4','x5'];
+  const dots=ids.map((id,i)=>{const g=el('g'),o=i<5;
+    g.append(o?el('circle',{r:12.5,class:'off'}):el('rect',{x:-12,y:-10.5,width:24,height:21,rx:4,class:'def'}));
+    const t=el('text',{class:'number'});t.textContent=o?id[1]:id.toUpperCase();g.append(t);court.append(g);return g});
+  const opening=[[23,31],[35.6,19],[5.8,23.4],[3,4.5],[34,8.2],[23.3,27.1],[32.2,16.6],[9,20.7],[6.8,6.7],[31.2,9.7]];
+  const frame=(title,cue,p,holder=0,extra={})=>({title,cue,p,holder,...extra});
+  function run(key){
+    const frames=[frame('Alignment','1 up top. Right corner empty. 5 starts low; 2 plants the first screen. 3 stays left with room to attack right.',opening,0)];
+    function add(title,cue,m,holder=frames.at(-1).holder,extra={}){
+      const p=frames.at(-1).p.map((v,i)=>m[ids[i]]??v);frames.push(frame(title,cue,p,holder,extra))}
+    add('First window',key==='first'?'X5 is caught inside the pindown. 1 hits 5 beyond the right-slot arc: feet ready, shoot on the catch.':'5 comes up the right lane line off 2. X5 arrives in the shooting window; 5 secures the entry and keeps the ball high.',
+      {o5:[35.4,27.1],x5:key==='first'?[32.1,19.2]:[33.3,23.7],x2:[32.2,15.6]},4,
+      {curve:{o5:[40,18],x5:[28.6,17.3]},screen:1,pass:[.55,.96]});
+    if(key==='first')return frames;
+    const sw=key==='switch';
+    add('Handoff and re-screen',sw?'X5 takes 1 on the handoff; X1 switches onto 5. 2 changes the screen angle for X1, the new defender.':'1 follows the entry around 5’s outside shoulder. 2 plants again, inside the recovery path to the top. 5 waits for 1 to clear.',
+      {o1:[38.1,25.2],o2:sw?[32.1,28]:[30.6,25.1],x1:sw?[34.2,30.2]:[40,28.1],x2:sw?[28.9,26.8]:[28.5,22.5],x5:sw?[36.7,21.8]:[33.5,22.8]},0,
+      {curve:{o1:[37.9,34.2],x1:[39.7,33.4]},screen:1,pass:[.82,1]});
+    add('Read the drive',key==='return'?'X5 goes with the driving guard. 5 flares across the top behind 2’s second screen; 1 sees the throwback.':key==='switch'?'X5 contains 1, X2 takes 5 outside and X1 takes 2. Neither designed shot is open.':key==='slash'?'X5 follows 5. As 1 turns downhill, X3 leaves the left wing and steps into the paint. 3 holds width.':'X5 chases 5 back to the top. X1 trails the handoff; the empty right side is open for 1.',
+      {o1:[34.4,16],o5:[23,29.5],x1:sw?[30.5,22.3]:[38,19.5],x2:sw?[25.4,27.1]:[28.9,21.4],x5:key==='return'||sw?[32.5,12.6]:[24.6,26],x3:key==='slash'?[26,12.7]:[10,19.7]},
+      0,{curve:{o1:[39,19],o5:[30,29.8],x5:sw||key==='return'?[35,17]:[28.7,23.3]},screen:1});
+    if(key==='return')add('Second three','1 throws back above the help. 5 catches square behind the top of the arc; 2 stays below the pass.',{},4,{pass:[.1,.8]});
+    if(key==='drive')add('Turn the corner','1 keeps it and gets inside X1’s hip. Finish on the right if the rim stays open.',{o1:[27.5,8.8],x1:[31.9,11.1]},0);
+    if(key==='slash'){
+      add('Hit the slasher','1 passes from a visible angle before reaching the baseline. X3 is in the paint, so 3 catches on the left wing facing right.',
+        {o1:[32.3,15.7],x1:[36,18.4],x3:[25.4,11.4]},2,{pass:[.1,.82]});
+      add('Clear, then drive right','1 exits right. X3 is late to the catch. With the middle clear, 3 attacks right-handed; 4 holds the far corner and 5 stays above the ball.',
+        {o1:[44,7],o2:[43.5,22.5],o3:[20.7,15.4],x1:[39.4,8.8],x2:[39.8,20.3],x3:[15.8,12.2]},2,{curve:{o3:[12.5,22.3],x3:[11.7,16.2]},delay:{o3:.38}});
+    }
+    if(sw)add('Reset','1 retreats and reverses to 3. With X3 still guarding the right-hand lane, 3 swings on or resets. No forced shot.',
+      {o1:[35.7,27.9],x5:[33.7,24.6],o5:[20.4,32.6],x2:[21.4,29.1],o2:[41.8,20.8],x1:[38.9,18.6]},2,{pass:[.63,1]});
+    return frames;
+  }
+  const limited=window.matchMedia('(prefers-reduced-motion: reduce)'),clamp=v=>Math.max(0,Math.min(1,v)),mix=(a,b,v)=>[a[0]+(b[0]-a[0])*v,a[1]+(b[1]-a[1])*v],fmt=p=>p.map(n=>n*10).join(' ');
+  let frames,at=0,raf=0,playing=false,currentBeat=0;
+  function draw(from,to,t){
+    const a=frames[from],b=frames[to],pts=a.p.map((v,i)=>{const delay=b.delay?.[ids[i]]||0;let u=clamp((t-delay)/(1-delay));u=u*u*(3-2*u);
+      const c=b.curve?.[ids[i]];return c?mix(mix(v,c,u),mix(c,b.p[i],u),u):mix(v,b.p[i],u)});
+    route.replaceChildren();
+    if(to>0)for(let i=0;i<5;i++){const prev=frames[to-1].p[i],dest=b.p[i];if(prev===dest)continue;
+      const c=b.curve?.[ids[i]],d='M'+fmt(prev)+(c?' Q'+fmt(c)+' ':' L')+fmt(dest);route.append(el('path',{d,class:'move'}))}
+    if(b.screen!=null){const p=pts[b.screen];route.append(el('path',{d:'M'+fmt([p[0]-.95,p[1]+1.45])+'l19 -5',class:'screen'}))}
+    pts.forEach((p,i)=>dots[i].setAttribute('transform','translate('+fmt(p)+')'));
+    const giver=to>0?frames[to-1].holder:b.holder;let p=pts[b.holder];
+    if(giver!==b.holder){const w=b.pass??[.2,.87],v=clamp((t-w[0])/(w[1]-w[0]));p=mix(pts[giver],pts[b.holder],v);
+      pass.setAttribute('d',t>=w[0]?'M'+fmt(pts[giver])+' L'+fmt(pts[b.holder]):'')}
+    else pass.setAttribute('d','');
+    ball.setAttribute('cx',p[0]*10+10);ball.setAttribute('cy',p[1]*10-10)
+  }
+  function label(i){currentBeat=i;const f=frames[i];get('beat').textContent=(i+1)+' / '+frames.length+' · '+f.title;get('cue').textContent=f.cue;get('description').textContent=f.cue}
+  function record(){try{history.replaceState(null,'','#'+sel.value+'/'+at)}catch{}}
+  function stop(){cancelAnimationFrame(raf);playing=false;get('play').textContent='Play from start'}
+  function step(i,save=true){stop();at=Math.max(0,Math.min(i,frames.length-1));draw(at,at,1);label(at);get('prev').disabled=at===0;get('next').disabled=at===frames.length-1;if(save)record()}
+  function restore(){const [key,idx]=location.hash.slice(1).split('/');sel.value=Array.from(sel.options).some(o=>o.value===key)?key:'return';frames=run(sel.value);step(/^\d+$/.test(idx||'')?Number(idx):0,false)}
+  sel.onchange=()=>{frames=run(sel.value);step(frames.length-1)};
+  get('prev').onclick=()=>step(at-1);get('next').onclick=()=>step(at+1);
+  get('play').onclick=()=>{if(playing){step(currentBeat);return}if(limited.matches){step(frames.length-1);return}
+    step(0);playing=true;get('play').textContent='Stop at this beat';let i=1,began=performance.now();label(i);
+    function play(now){const elapsed=now-began,u=clamp(elapsed/1350);draw(i-1,i,u);
+      if(elapsed>=2050){at=i;if(i===frames.length-1){step(i);return}i++;began=now;label(i)}
+      raf=requestAnimationFrame(play)}raf=requestAnimationFrame(play)};
+  addEventListener('hashchange',restore);restore();
+})();
+</script>
+</body></html>
