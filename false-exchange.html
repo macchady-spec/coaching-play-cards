@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="no-referrer"><meta name="description" content="Choose the defense, play the action and compare the offensive reads on a five-on-five coaching board."><title>False Exchange | Coaching board</title><style>
+:root{color-scheme:light;--background:#fffcf6;--foreground:#182a34;--border:#bcc8c6;--viz-series-1:#b05013;--viz-series-2:#246980;--orange:#ec740d;--font-size-base:16px;font-family:system-ui,-apple-system,sans-serif;color:var(--foreground);background:#eeeee7}
+*{box-sizing:border-box}body{margin:auto;max-width:44rem;padding:1rem}main{background:var(--background);padding:clamp(1rem,4vw,2.3rem);border-radius:1.25rem;border:1px solid #d4d8ce}nav,.toolbar,.viz-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}nav{margin:0 0 .8rem}nav span{font-size:.75rem;font-weight:750;color:#4c5c58;letter-spacing:.09em}nav a{background:#fffaf1;color:#253c42;border:1px solid #becbc4;border-radius:2rem;padding:.45rem .75rem;text-decoration:none;font-weight:650}nav a[aria-current=page]{background:#1e4241;color:white}h1{font-size:clamp(2rem,6vw,3.3rem);line-height:1.04;letter-spacing:-.045em;margin:.3rem 0 .45rem}h3{margin:.5rem 0}.intro{font-size:1.05rem;line-height:1.42;margin:0 0 1.2rem}.eyebrow{display:block;text-transform:uppercase;letter-spacing:.09em;font-size:.73rem;font-weight:750;color:#486662}
+label{display:block;font-weight:650;margin:.4rem 0}select,button{font:inherit;min-height:44px}select{display:block;margin:.35rem 0 .65rem;width:100%;padding:.55rem;border:1px solid #849a95;border-radius:.55rem;color:var(--foreground);background:white}button{cursor:pointer;border-radius:.55rem;border:1px solid #aebdb5;background:#fff;color:#243b40;padding:.5rem .8rem;font-weight:600}button.primary,.btn-primary{background:#214c48;color:white;border-color:#214c48}button:disabled{opacity:.45;cursor:default}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #07689c;outline-offset:2px}
+.board,#false-exchange .court{background:#f4eee1;border-radius:.8rem}.board{overflow:hidden;border:1px solid #dbd9c9}svg#floor{display:block;width:100%;max-height:49vh;margin:auto}.lines{fill:none;stroke:#afbab3;stroke-width:1.75}.basket{stroke:#a66c37;stroke-width:2.5}.off,.def{fill:#fffdf6;stroke-width:2.2}.off,.move,.screen{stroke:var(--viz-series-1)}.def{stroke:var(--viz-series-2)}.move{stroke-width:2;opacity:.65}.screen{stroke-width:3.4}.delivery{stroke:#263d40;stroke-width:2;stroke-dasharray:5 5}.ball{fill:var(--orange);stroke:var(--foreground)}.number{font-size:16px;text-anchor:middle;dominant-baseline:central;fill:#102933;font-weight:650}.caption{background:#e7eee6;border-top:1px solid #c6d2c6;padding:.75rem .9rem;line-height:1.45}.caption strong{display:block;font-weight:550;margin-top:.15rem}.toolbar{margin:.8rem 0}.roles,.text-small,footer{font-size:.84rem;line-height:1.5;color:#455c5d}.roles{margin:.5rem 0 1rem}details{margin-top:.4rem;border-top:1px solid var(--border);padding:.55rem 0}summary{cursor:pointer;font-weight:700}details p{line-height:1.5;margin:.6rem .2rem}footer{margin-top:.7rem}#false-exchange .read{line-height:1.4;background:#e7eee6;padding:.7rem;margin:.2rem 0;border-radius:.4rem}@media (max-width:440px){body{padding:.5rem}main{padding:.85rem}nav span{display:none}#floor .number{font-size:18px}}
+</style></head><body><nav aria-label="Playbook"><span>COACHING BOARD</span> <a href="index.html">5 Twice</a><a aria-current="page" href="false-exchange.html">False Exchange</a></nav><main><div id="false-exchange">
+  <style>
+    #false-exchange{display:grid;gap:calc(var(--font-size-base)*.5)}
+    #false-exchange .court{display:block;width:100%;max-width:480px;margin:auto}
+    #false-exchange .floor{fill:none;stroke:var(--border);stroke-width:1.5}
+    #false-exchange .marks text{fill:var(--foreground);font-weight:500;text-anchor:middle;dominant-baseline:central}
+  </style>
+  <header><div class="eyebrow">HALF COURT &nbsp;/&nbsp; AFTER TIMEOUT</div><h1>False Exchange</h1><p class="intro">Sell a handoff. Send the cutter backdoor and the shooting big to the space he leaves.</p></header>
+  <div class="viz-controls"><label class="form-label">Defensive answer
+    <select class="form-select"><option value="tag">X5 tags the cutter</option><option value="hug">X5 stays with the big</option><option value="low">X3 helps from the far corner</option><option value="switch">X2 and X5 switch cleanly</option></select>
+  </label></div>
+  <svg class="court" viewBox="0 0 400 267" role="img" aria-label="Five-on-five half court"><desc></desc>
+    <g class="floor"><path d="M4 260V8H396V260H4 M135 8V134H265V8 M152 134a48 48 0 0 0 96 0 M22 8V53a181 156 0 0 0 356 0V8"/><path d="M186 29h28"/><circle cx="200" cy="37" r="6"/></g>
+    <g class="routes" fill="none" stroke="var(--viz-series-1)" stroke-width="2"></g>
+    <path class="pass" stroke="var(--foreground)" fill="none" stroke-dasharray="4 4" stroke-width="2"/>
+    <g class="marks"></g><circle class="ball" r="4.5" fill="var(--orange)" stroke="var(--foreground)"/>
+  </svg>
+  <div class="viz-row"><button type="button" class="btn btn-primary play">Play the action</button><button type="button" class="btn entry">Freeze at the fake</button></div>
+  <p class="read" aria-live="polite"></p>
+  <div class="text-small">1 Handler · 2 Finisher/passer · 3 Corner · 4 Safety · 5 Shooting big · X Defense</div>
+</div>
+<script>
+(() => {
+  const root=document.getElementById('false-exchange'), get=q=>root.querySelector(q);
+  const select=get('select'), marks=get('.marks'), routes=get('.routes'), live=get('.read');
+  const ns='http://www.w3.org/2000/svg', node=t=>document.createElementNS(ns,t);
+  const start=[[209,243],[365,147],[27,46],[75,230],[256,126],[206,210],[338,139],[57,59],[94,205],[239,104]];
+  const fake=[[287,218],[323,174],[27,46],[75,230],[298,148],[269,201],[302,186],[57,59],[94,205],[276,125]];
+  const end=[[288,218],[217,59],[27,46],[75,230],[359,174],[265,200],[256,98],[57,59],[94,205],[238,79]];
+  const choices={
+    tag:{finish:5,line:'X5 steps inside with 2. Throw straight to 5, feet set beyond the arc.'},
+    hug:{finish:2,line:'X5 follows 5 outside. Lead 2 below the trailing X2 for the finish.'},
+    low:{finish:3,line:'X5 follows 5. On 2’s catch, X3 leaves the far corner: 2 kicks out to 3.'},
+    switch:{finish:1,line:'X5 contains 2 and X2 gets out to 5. Hold the pass; reverse to 4 or play the mismatch.'}
+  };
+  const players=start.map((_,i)=>{
+    const g=node('g'), d=i>=5, shape=node(d?'rect':'circle'), v=node('text');
+    if(d){for(const [k,n] of Object.entries({x:-10.5,y:-9,width:21,height:18,rx:3}))shape.setAttribute(k,n)}
+    else shape.setAttribute('r','9.5');
+    shape.setAttribute('fill','var(--background)');shape.setAttribute('stroke',d?'var(--viz-series-2)':'var(--viz-series-1)');shape.setAttribute('stroke-width','2');
+    v.textContent=(d?'X':'')+(i%5+1);v.setAttribute('font-size',d?'13':'15');g.append(shape,v);marks.append(g);return g;
+  });
+  const clamp=x=>Math.max(0,Math.min(1,x)),smooth=x=>x*x*(3-2*x),mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);
+  let raf=0,moment='result';
+  function targets(key){
+    const e=end.map(p=>p.slice());
+    if(key==='hug'||key==='low')e[9]=[337,153];
+    if(key==='low')e[7]=[194,43];
+    if(key==='switch'){e[6]=[342,155];e[9]=[223,82]}
+    return e;
+  }
+  function pos(i,t,e){
+    if(t<=1)return mix(start[i],fake[i],smooth(clamp(t)));
+    const u=clamp(t-1);
+    if(i===1){const k=smooth(clamp(u/.9));return mix(mix(fake[i],[344,113],k),mix([344,113],e[i],k),k)}
+    const k=smooth(clamp(i===4?(u-.23)/.74:u));return mix(fake[i],e[i],k)
+  }
+  function paint(t){
+    const key=select.value,e=targets(key),pts=start.map((_,i)=>pos(i,t,e));routes.replaceChildren();
+    if(t>=1){for(const [i,mid] of [[1,[344,113]],[4,[329,161]]]){
+      const p=node('path');p.setAttribute('d','M'+fake[i].join(' ')+' Q'+mid.join(' ')+' '+e[i].join(' '));routes.append(p)
+    }const bar=node('path');bar.setAttribute('d','M290 154l16 -12');routes.append(bar)}
+    players.forEach((g,i)=>g.setAttribute('transform','translate('+pts[i].join(' ')+')'));
+    let ball=pts[0],trails='';
+    if(key!=='switch'&&t>1.7){
+      const first=key==='tag'?4:1;ball=mix(pts[0],pts[first],clamp((t-1.7)/.42));trails='M'+pts[0].join(' ')+' L'+pts[first].join(' ');
+      if(key==='low'&&t>2.28){ball=mix(pts[1],pts[2],clamp((t-2.28)/.42));trails+=' L'+pts[2].join(' ')}
+    }
+    get('.pass').setAttribute('d',trails);get('.ball').setAttribute('cx',ball[0]+9);get('.ball').setAttribute('cy',ball[1]-8)
+  }
+  function freeze(where){
+    cancelAnimationFrame(raf);moment=where;paint(where==='fake'?1:2.8);
+    const cue=where==='fake'?'1 dribbles at 2 as if to hand off. 5 is set behind X2; the right corner is empty.':choices[select.value].line;
+    live.textContent=cue;get('desc').textContent=cue
+  }
+  function remember(){try{history.replaceState(null,'','#'+select.value+'/'+moment)}catch{}}
+  select.onchange=()=>{freeze('result');remember()};get('.entry').onclick=()=>{freeze('fake');remember()};
+  get('.play').onclick=()=>{
+    cancelAnimationFrame(raf);if(matchMedia('(prefers-reduced-motion: reduce)').matches){freeze('result');remember();return}
+    live.textContent='1 sells the handoff; watch the cutter and X5.';const at=performance.now();
+    function tick(now){const t=Math.min(2.8,(now-at)/1150);paint(t);if(t<2.8)raf=requestAnimationFrame(tick);else{freeze('result');remember()}}raf=requestAnimationFrame(tick)
+  };
+  function restore(){const [key,at]=location.hash.slice(1).split('/');select.value=Object.hasOwn(choices,key)?key:'tag';freeze(at==='fake'?'fake':'result')}
+  restore();addEventListener('hashchange',restore);
+})();
+</script>
+<details open><summary>Timeout call</summary><p>“False Exchange right. Empty corner. 2, sell the handoff. 5, screen then replace. 1, read the big. 2, read the corner.”</p></details><details><summary>First two steps</summary><p>1 dribbles at 2 on the right wing. 2 shows for the handoff, then cuts backdoor off a stationary backscreen from 5 if X2 jumps. 5 waits for 2 to clear before popping beyond the arc. If X2 sits inside, give the real handoff.</p></details><footer>Authored teaching example. Choose a coverage to see its answer.</footer></main></body></html>
