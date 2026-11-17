@@ -355,3 +355,7 @@ svg text {
   font-weight:700;
   text-underline-offset:3px;
 }
+
+#stagger-finish, .finish-link a { color:var(--teal); font-weight:700; text-underline-offset:3px; }
+#stagger-finish:not([hidden]) { display:inline-block; margin-top:12px; }
+.finish-link { margin:0 0 18px; }

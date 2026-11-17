@@ -58,8 +58,9 @@ function createCourt(root, prefix='',fullCourt=false){
       const control=b.curves?.[k], d='M'+fmt(a.p[k])+(control?' Q'+fmt(control)+' ':' L')+fmt(b.p[k])
       part('trails').append(svg('path',{d,class:k<5?'trail':'trail def-trail'}))
     }
-    if(b.screen!=null){
-      const [x,y]=b.p[b.screen]
+    const screeners = b.screens ?? (b.screen == null ? [] : [b.screen])
+    for (const screener of screeners) {
+      const [x,y]=b.p[screener]
       part('trails').append(svg('path',{d:'M'+fmt([x-1,y+1.5])+'l20 -4',class:'screen'}))
     }
   }

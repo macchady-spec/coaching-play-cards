@@ -60,7 +60,8 @@ return [
       choice('lift','X4 is late getting back out to 3',xout('lift'),[2,4],['4 lifts as 3 rises','X3 closes to 4','One more pass to 3']),
       choice('backdoor','X4 jumps the wing pass',xout('backdoor'),[2,4,5],['Clear the cutting lane','X4 takes away the pass','3 cuts behind X4','Catch and read X5']),
       choice('screen','X3 runs the corner closeout · screen it',xout('screen'),[2,4],['3 moves before the skip','Plant in the recovery path','Hit the corner','Read the recovering X3'])
-    ]}
+    ]},
+  clujStagger(cluj('reset'))
 ]
 }
 const plays = window.staffPlaybook || buildSwitchPlays()
@@ -89,6 +90,10 @@ function save(){
   catch(error) { if(error.name!=='SecurityError') throw error }
 }
 function controls(){
+  const continuation = ref('stagger-finish')
+  if (continuation) {
+    continuation.hidden = !(play.id === 'screen' && option.id === 'reset' && at === frames.length-1 && !running)
+  }
   ref('play').textContent=running?'Pause':progress>0?'Resume':at===frames.length-1?'Replay':at===0?'Play to the read':'Continue'
   ref('prev').disabled=at===0&&!progress&&!running
   ref('next').disabled=at===frames.length-1
