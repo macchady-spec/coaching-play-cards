@@ -348,3 +348,10 @@ svg text {
     padding:7px 9px;
   }
 }
+.compare-link {
+  display:inline-block;
+  margin-top:14px;
+  color:var(--teal);
+  font-weight:700;
+  text-underline-offset:3px;
+}

@@ -1,0 +1,194 @@
+.return {
+  color:var(--teal);
+  font-weight:700;
+  text-underline-offset:3px;
+}
+.return {
+  display:inline-block;
+  margin-top:16px;
+  font-size:13px;
+}
+.tandem h1 {
+  margin:14px 0 8px;
+}
+.intro {
+  font-size:17px;
+  max-width:770px;
+}
+.settings {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin:18px 0;
+  border-block:1px solid var(--line);
+  padding:10px 0;
+}
+.settings>label:first-child {
+  font-weight:700;
+}
+.settings select {
+  flex:0 1 auto;
+}
+.zoom {
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-left:auto;
+  font-size:14px;
+}
+.zoom input {
+  width:17px;
+  height:17px;
+  accent-color:var(--teal);
+}
+.pair {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.pair h2 {
+  font-size:clamp(17px,2.8vw,26px);
+  margin:0 0 8px;
+}
+.paired-court {
+  display:block;
+  width:100%;
+  height:min(43vh,390px);
+  margin:auto;
+}
+.side-cue {
+  font-size:16px;
+  line-height:1.38;
+  margin:9px 0 4px;
+}
+.transport {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border-top:1px solid var(--line);
+  margin-top:14px;
+  padding:13px 0;
+}
+.transport .primary {
+  flex:none;
+}
+#phase {
+  font-size:14px;
+  font-weight:700;
+  color:var(--teal);
+  margin-left:auto;
+}
+.tandem .legend {
+  flex-wrap:wrap;
+  gap:8px 18px;
+}
+.watch {
+  background:#754480;
+  border-radius:2px;
+}
+.target {
+  border:2px solid #16795e;
+  border-radius:50%;
+}
+.def.watched rect {
+  fill:#68396e;
+  stroke:#512b57;
+  stroke-width:2.3;
+}
+.def.watched text {
+  fill:white;
+}
+.off.shooter circle {
+  stroke:#e8fff0;
+  stroke-width:2;
+}
+.shooter .shooter-ring {
+  fill:none;
+  stroke:#16795e;
+  stroke-width:2.5;
+  stroke-dasharray:4 2;
+}
+.direction {
+  fill:none;
+  stroke:#8a4d80;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width:3;
+}
+#sharing:empty {
+  display:none;
+}
+.evidence {
+  margin-top:15px;
+}
+.evidence p {
+  margin-top:9px;
+}
+@media(max-width:680px) {
+  .settings {
+    display:grid;
+    gap:4px 8px;
+    grid-template-columns:auto minmax(0,1fr);
+    margin:12px 0;
+  }
+  .settings>label:first-child {
+    font-size:13px;
+  }
+  .settings select {
+    font-size:13px;
+  }
+  .zoom {
+    grid-column:1/-1;
+    margin-left:0;
+    font-size:12px;
+  }
+  .pair {
+    gap:7px;
+  }
+  .pair section {
+    display:grid;
+    grid-template-rows:2.3em auto 1fr;
+    align-items:start;
+  }
+  .pair h2 {
+    line-height:1.12;
+    font-size:16px;
+  }
+  .paired-court {
+    height:clamp(160px,51vw,300px);
+  }
+  .side-cue {
+    font-size:13px;
+  }
+  .transport {
+    flex-wrap:wrap;
+    margin-top:10px;
+    padding:10px 0;
+  }
+  .transport button {
+    font-size:13px;
+    padding:8px;
+  }
+  #phase {
+    width:100%;
+    margin:0;
+    font-size:13px;
+  }
+  .intro {
+    font-size:15px;
+  }
+  .tandem .legend {
+    font-size:11px;
+  }
+}
+@media(max-width:680px) {
+  .paired-court .watched text {
+    font-size:16px;
+  }
+  .paired-court .off text {
+    font-size:18px;
+  }
+  .paired-court .direction {
+    stroke-width:4px;
+  }
+}

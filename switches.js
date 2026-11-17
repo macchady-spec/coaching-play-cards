@@ -5,22 +5,6 @@ const cluj = id => sequence('cluj-inverted-flare', id)
 const lift = id => sequence('clearout-corner-lift', id)
 const afterPeel = id => lift('peel').concat(sequence('clearout-peel-entry', id).slice(1))
 const xout = id => sequence('attack-xout', id)
-// An authored continuation of the Cluj switch; frames before the paint touch come from CoachOS.
-function huntAndRotate() {
-  const turns = [...cluj('switch')]
-  function add(cue, changes, holder, pass) {
-    const prev = turns[turns.length-1]
-    turns.push({cue, p:prev.p.map((p,i)=>changes[actorIds[i]] ?? p), holder, pass})
-  }
-  add('4 beats X2 into the paint. X3 leaves corner 3 to get between 4 and the rim. 3 holds the corner, 1 holds the high outlet and neither weak-side player cuts into the drive.',
-    {o4:[26.3,10.6],x2:[29.8,14.6],x3:[29.3,8.2],x1:[40,21]},3)
-  add('4 passes to 3. X1 closes down from the high outlet and takes away the immediate corner three. X3 turns back out of the paint to pick up 1. Watch how much farther X3 has to run.',
-    {o4:[25.4,11],x1:[43.9,10.1],x3:[32.8,17.5],x2:[27.8,13.5]},2,[.07,.82])
-  add('3 makes the extra pass before X3 can recover. 1 catches above the break ready to shoot. If X3 arrives under control, 1 swings the ball or attacks an exposed hip.',
-    {x1:[44.3,9.3],x3:[35.4,25.6]},0,[.09,.85])
-  return turns
-}
-const actorIds = ['o1','o2','o3','o4','o5','x1','x2','x3','x4','x5']
 function twice(id) {
   return window.createFiveTwice(id).map(frame => ({
     ...frame, curves: Object.fromEntries(Object.entries(frame.curve || {}).map(([key, value]) => [actorIds.indexOf(key), value])),
@@ -37,7 +21,7 @@ const plays = [
     headings:['Choose the matchup','2 screens for 4','2 flares off 5'],
     options:[
       choice('switch','X2 switches onto 4 · nobody helps',cluj('switch'),[3],['Turn X2’s outside hip','Read the rim']),
-      choice('hunt','X2 switches · X3 helps · X1 closes out',huntAndRotate(),[3,5,6],['Turn X2’s outside hip','4 gets into the paint','X3 leaves the corner','X1 takes the first pass','3 passes up to 1']),
+      choice('hunt','X2 switches · X3 helps · X1 closes out',huntAndRotate(cluj('switch')),[3,5,6],['Turn X2’s outside hip','4 gets into the paint','X3 leaves the corner','X1 takes the first pass','3 passes up to 1']),
       choice('post','X5 goes out with the shooter',cluj('post'),[3],['5 releases inside','Feed the post']),
       choice('flare','X5 stays in the paint',cluj('flare'),[3],['Find the wing','Catch ready to shoot']),
       choice('corner','X3 tags the post',cluj('corner'),[3],['Read the low helper','Skip to the corner']),
@@ -82,54 +66,11 @@ function title(i) {
   if (play.id==='drive' && option.id==='deny') return denyTitles[i]
   return frames[i].title || play.headings[i] || option.headings[i-play.headings.length] || 'Read the defense'
 }
-const svg=(tag,attributes)=>{const n=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attributes))n.setAttribute(k,v);return n}
-const nodes=actorIds.map((id,i)=>{
-  const offense=i<5,g=svg('g',{class:offense?'off':'def'})
-  const label=svg('text',{});label.textContent=offense?id[1]:id.toUpperCase()
-  g.append(offense?svg('circle',{r:12.6}):svg('rect',{x:-12,y:-10,width:24,height:20,rx:4}),label)
-  ref('actors').append(g);return g
-})
-// Draw offense above defenders when a legal screen brings two symbols together.
-nodes.slice(0,5).forEach(n=>ref('actors').append(n))
-const clamp=v=>Math.max(0,Math.min(1,v))
-const mix=(a,b,u)=>[a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u]
-const fmt=p=>p.map(v=>(v*10).toFixed(2)).join(' ')
+const courtView=createCourt(ref('court'))
 const samePose=(a,b)=>a.holder===b.holder&&a.p.every((v,i)=>v[0]===b.p[i][0]&&v[1]===b.p[i][1])
 let play,option,frames,at=0,goal=0,progress=0,running=false,raf=0,started=0
 const duration=1280
 const reduced=matchMedia('(prefers-reduced-motion: reduce)')
-function draw(from,to,u){
-  const a=frames[from],b=frames[to]
-  const pts=a.p.map((p,i)=>{
-    const [start,end]=b.windows?.[i]||[0,1]
-    let v=clamp((u-start)/(end-start));v=v*v*(3-2*v)
-    const control=from!==to&&b.curves?.[i]
-    return control?mix(mix(p,control,v),mix(control,b.p[i],v),v):mix(p,b.p[i],v)
-  })
-  pts.forEach((p,i)=>nodes[i].setAttribute('transform','translate('+fmt(p)+')'))
-  const giver=to>0?frames[to-1].holder:b.holder
-  let ball=pts[b.holder]
-  if(giver!==b.holder){
-    const [first,last]=b.pass||[.15,.9]
-    const v=from===to?1:clamp((u-first)/(last-first))
-    ball=mix(pts[giver],pts[b.holder],v)
-    ref('pass').setAttribute('d',u>=first?'M'+fmt(pts[giver])+' L'+fmt(pts[b.holder]):'')
-  }else ref('pass').setAttribute('d','')
-  ref('ball').setAttribute('transform','translate('+fmt([ball[0]+1.05,ball[1]-.85])+')')
-}
-function paths(i){
-  const b=frames[i],a=frames[Math.max(i-1,0)]
-  ref('trails').replaceChildren()
-  for(let k=0;k<5;k++){
-    if(a.p[k].every((v,n)=>v===b.p[k][n]))continue
-    const control=b.curves?.[k], d='M'+fmt(a.p[k])+(control?' Q'+fmt(control)+' ':' L')+fmt(b.p[k])
-    ref('trails').append(svg('path',{d,class:'trail'}))
-  }
-  if(b.screen!=null){
-    const [x,y]=b.p[b.screen]
-    ref('trails').append(svg('path',{d:'M'+fmt([x-1,y+1.5])+'l20 -4',class:'screen'}))
-  }
-}
 function cue(i){
   ref('count').textContent='Beat '+(i+1)+' of '+frames.length+(option.stops.includes(i)?' · Decision':'')
   ref('moment').textContent=title(i)
@@ -157,15 +98,15 @@ function controls(){
 function stop(){cancelAnimationFrame(raf);running=false}
 function settle(i){
   stop();at=i;progress=0
-  paths(i);draw(i,i,1);cue(i);controls();save()
+  courtView.paths(frames,i);courtView.draw(frames,i,i,1);cue(i);controls();save()
 }
 function tick(now){
   progress=clamp((now-started)/duration)
-  draw(at,at+1,progress)
+  courtView.draw(frames,at,at+1,progress)
   if(progress>=1){
     at++;progress=0;save()
     if(at>=goal){settle(at);return}
-    started=now;paths(at+1);cue(at+1);controls()
+    started=now;courtView.paths(frames,at+1);cue(at+1);controls()
   }
   raf=requestAnimationFrame(tick)
 }
@@ -173,7 +114,7 @@ function animate(target){
   stop()
   if(target<=at || reduced.matches){settle(target);return}
   goal=target;running=true;started=performance.now()-progress*duration
-  paths(at+1);cue(at+1);controls();raf=requestAnimationFrame(tick)
+  courtView.paths(frames,at+1);cue(at+1);controls();raf=requestAnimationFrame(tick)
 }
 function nextStop(){return option.stops.find(i=>i>at)??frames.length-1}
 function button(label,handler){const b=document.createElement('button');b.textContent=label;b.onclick=handler;return b}
