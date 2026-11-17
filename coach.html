@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Switch & mismatch playbook · Coaching board</title>
+<meta name="description" content="Watch the mismatch on a ball screen, a drive and a handoff. Walk through three team defense calls on an animated five-on-five board.">
+<link rel="stylesheet" href="switches.css"><link rel="stylesheet" href="staff.css">
+<script defer src="hunt-rotation.js"></script><script defer src="court.js?v=staff1"></script><script defer src="staff-plays.js?v=staff1"></script><script defer src="switches.js?v=staff1"></script>
+</head><body><header><div class="wrap bar"><a class="brand" href="coach.html"><span class="logo" aria-hidden="true">CO</span> Coaching board</a><a class="booklink" href="coach.html" id="booklink">Share playbook</a></div></header><div class="wrap" id="book-status" role="status"></div>
+<main class="wrap">
+<h1>Switch &amp; mismatch playbook</h1>
+<p class="intro">Bring their target defender into the action. When they switch, decide who has the advantage.</p>
+<div class="library" aria-label="More animated mismatch plays">
+<a href="switches.html#screen/hunt/0"><small>Inverted screen</small><strong>Cluj flare →</strong><span>Get their guard onto your creator.</span></a>
+<a href="switches.html#drive/seal/0"><small>Drive &amp; peel switch</small><strong>Corner lift →</strong><span>Seal the guard who takes your big.</span></a>
+<a href="switches.html#handoff/switch/0"><small>Handoff &amp; re-screen</small><strong>5 Twice →</strong><span>Screen the new defender on your shooting big.</span></a>
+</div>
+<h2 class="subhead">Walk it through</h2>
+<nav id="plays" aria-label="Choose a coaching board"></nav>
+<div class="layout"><section aria-label="Animated coaching board">
+<div class="tools"><label for="read">Read to practice</label><select id="read"></select><span id="only-read" hidden></span></div>
+<div class="floor"><svg id="court" viewBox="-6 -6 512 480" role="img"></svg></div>
+<div id="controls"><button id="play" class="primary">Play to the read</button><button id="prev">← Back</button><button id="next">Next beat →</button></div>
+<div id="beats" aria-label="Jump to a beat"></div><p id="legend-teams" class="team-key"></p>
+</section><aside><div class="panel readout" aria-live="polite" aria-atomic="true"><div id="count" class="kicker"></div><h2 id="moment"></h2><p id="cue"></p></div>
+<div class="panel instruction"><div class="kicker">Call it in a timeout</div><p id="timeout"></p><div class="kicker">What to discuss</div><p id="matchup"></p></div>
+<details class="panel"><summary>Coaching notes &amp; sources</summary><div id="notes"></div></details>
+<button id="share">Share this beat</button></aside></div>
+<div id="sharing" role="status"></div>
+<noscript>Enable JavaScript to animate these plays.</noscript></main>
+<script>
+document.getElementById('booklink').addEventListener('click',async e=>{
+  e.preventDefault();const a=e.currentTarget,url=a.href;
+  const status=document.getElementById('book-status');status.replaceChildren();
+  try{await navigator.clipboard.writeText(url);status.textContent='Playbook link copied.'}
+  catch{const link=document.createElement('a');link.href=url;link.textContent=url;status.append('Copy this playbook link: ',link)}
+})
+</script>
+</body></html>

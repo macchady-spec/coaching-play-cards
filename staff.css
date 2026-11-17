@@ -1,0 +1,12 @@
+.intro{font-size:17px;max-width:760px;color:var(--muted)}
+.library{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0 21px}
+.library a{display:grid;align-content:start;gap:3px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);padding:12px 14px;text-decoration:none}
+.library a:hover,.library a:focus-visible{border-color:var(--teal);background:#eef5ef}
+.library small,.subhead{color:var(--teal);font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:800}
+.library strong{font-size:19px}.library span,.team-key{font-size:14px;color:var(--muted)}
+.subhead{margin:10px 0}.booklink,#share{background:transparent;border:1px solid #78928a;border-radius:8px;padding:8px 13px;font-weight:650;color:white;text-decoration:none}.booklink:hover{text-decoration:underline}
+#share{border-color:var(--line);color:var(--teal)}#book-status:not(:empty){background:#ecf5e9;padding:8px 12px;overflow-wrap:anywhere;margin-top:5px}
+#court.full-court{max-height:660px;height:74vh;min-height:440px}
+.watch circle,.watch rect{stroke:#aa5e00;stroke-width:3.2px}.def-trail{stroke:#9b4735}.team-key{margin-top:4px}
+@media(max-width:680px){.library{gap:5px;margin:12px 0}.library a{padding:7px}.library strong{font-size:14px}.library small{font-size:10px}.library span{display:none}.intro{font-size:15px}.booklink{font-size:13px}.team-key{font-size:12px}}
+@media(max-width:430px){#court .off text{font-size:17px}#court .def text{font-size:14px}#court .def rect{x:-14px;width:28px}#court.full-court{height:80vh}}

@@ -1,5 +1,6 @@
 'use strict'
 const ref = id => document.getElementById(id)
+function buildSwitchPlays(){
 const sequence = (group, branch) => window.switchFrames[group + '/' + branch]
 const cluj = id => sequence('cluj-inverted-flare', id)
 const lift = id => sequence('clearout-corner-lift', id)
@@ -13,7 +14,7 @@ function twice(id) {
 }
 // Stops are the completed beats where the defense reveals an assignment or passing window.
 const choice = (id, label, frames, stops, headings = []) => ({id,label,frames,stops,headings})
-const plays = [
+return [
   {id:'screen', name:'Cluj flare', timeout:'Two screens four. Five frees two. Four, turn the corner and find the helper.',
     matchup:'Put your creator at 4. Put the player guarded by your target at 2. If X2 switches and 4 gets a shoulder past them, 4 drives. If both defenders stay square, keep moving the ball.',
     notes:'FIBA describes a hedge against the original Cluj action. The switch, paint help and X-out here are drawn coaching options. In the X-out option, put a shooter at 1 if the shot you want is the three above the break.',
@@ -61,12 +62,14 @@ const plays = [
       choice('screen','X3 runs the corner closeout · screen it',xout('screen'),[2,4],['3 moves before the skip','Plant in the recovery path','Hit the corner','Read the recovering X3'])
     ]}
 ]
+}
+const plays = window.staffPlaybook || buildSwitchPlays()
 const denyTitles=['Space the floor','X2 denies the lift','Cut behind X2','Reverse to 4','Re-space']
 function title(i) {
   if (play.id==='drive' && option.id==='deny') return denyTitles[i]
   return frames[i].title || play.headings[i] || option.headings[i-play.headings.length] || 'Read the defense'
 }
-const courtView=createCourt(ref('court'))
+let courtView, fullCourt
 const samePose=(a,b)=>a.holder===b.holder&&a.p.every((v,i)=>v[0]===b.p[i][0]&&v[1]===b.p[i][1])
 let play,option,frames,at=0,goal=0,progress=0,running=false,raf=0,started=0
 const duration=1280
@@ -120,8 +123,17 @@ function nextStop(){return option.stops.find(i=>i>at)??frames.length-1}
 function button(label,handler){const b=document.createElement('button');b.textContent=label;b.onclick=handler;return b}
 function select(selected,branch,i){
   stop();play=selected;option=branch;frames=option.frames
+  if(!courtView || fullCourt!==Boolean(play.fullCourt)){
+    fullCourt=Boolean(play.fullCourt);courtView=createCourt(ref('court'),'',fullCourt)
+  }
+  if(ref('legend-teams'))ref('legend-teams').textContent=play.legend || 'Numbers attack the top basket. Xs defend.'
   Array.from(ref('plays').children).forEach((b,n)=>b.setAttribute('aria-pressed',plays[n]===play))
   ref('read').replaceChildren(...play.options.map(o=>new Option(o.label,o.id,false,o===option)))
+  if(ref('only-read')){
+    const only=play.options.length===1
+    ref('read').hidden=only;ref('only-read').hidden=!only
+    ref('only-read').textContent=only?option.label:''
+  }
   ref('beats').replaceChildren(...frames.map((_,i)=>{
     const label='Beat '+(i+1)+' · '+title(i)
     const b=button('',()=>settle(i));b.setAttribute('aria-label',label);b.title=label;return b
