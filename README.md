@@ -4,4 +4,4 @@
 
 The original [5 Twice](https://macchady-spec.github.io/coaching-play-cards/) and [False Exchange](https://macchady-spec.github.io/coaching-play-cards/false-exchange.html) boards are also available.
 
-[Quick pass or one dribble?](https://macchady-spec.github.io/coaching-play-cards/tenerife.html#help/catch) compares two reads from the same corner catch. Both courts pause on X3’s reaction; switch the response to play the pass or the baseline drive.
+[Quick pass or one dribble?](https://macchady-spec.github.io/coaching-play-cards/tenerife.html#help/catch) compares two reads from the same corner catch. Both courts pause on X3’s reaction; switch the response to play the pass or the baseline drive. [Continue the baseline drive](https://macchady-spec.github.io/coaching-play-cards/tenerife.html#x2/drive) to see X2 step across or stay with 4, then play the drop pass and the near-side finish together.

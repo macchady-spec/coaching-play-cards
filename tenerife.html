@@ -10,12 +10,13 @@
 <header><div class="wrap bar"><a class="brand" href="switches.html#screen/hunt/6"><span class="logo" aria-hidden="true">CO</span> Coaching board</a><button id="share">Share this beat</button></div></header>
 <main class="wrap tandem">
 <a class="return" href="switches.html#screen/hunt/6">← Back to the corner catch</a>
-<h1>Quick pass or one dribble?</h1>
-<p class="intro">3 catches in the right corner. X1 closes to the ball. Watch <strong>X3</strong>, the defender running out of the paint toward shooter 1.</p>
+<nav class="read-nav" aria-label="Compare defensive reads"><a href="#help/catch" id="x3-link">X3 on the closeout</a><a href="#x2/drive" id="x2-link">X2 at the rim</a></nav>
+<h1 id="lesson-title">Quick pass or one dribble?</h1>
+<p class="intro" id="intro">3 catches in the right corner. X1 closes to the ball. Watch <strong>X3</strong>, the defender running out of the paint toward shooter 1.</p>
 <div class="settings">
-<label for="reaction">On the dribble, X3</label>
+<label for="reaction" id="reaction-label">On the dribble, X3</label>
 <select id="reaction"><option value="help">Steps back toward the drive</option><option value="stay">Stays with shooter 1</option></select>
-<label class="zoom"><input type="checkbox" id="focus"> Zoom to the ball side</label>
+<label class="zoom"><input type="checkbox" id="focus"> <span id="zoom-label">Zoom to the ball side</span></label>
 </div>
 <div class="pair">
 <section aria-labelledby="left-heading"><h2 id="left-heading">Quick extra pass</h2><div class="floor"><svg class="paired-court" id="left-court" viewBox="-6 -6 512 480" role="img"></svg></div><p class="side-cue" id="left-cue"></p></section>
@@ -23,10 +24,11 @@
 </div>
 <div class="transport">
 <button class="primary" id="run">Play to X3’s reaction</button><button id="restart">Back to the catch</button>
+<a href="#x2/drive" id="follow-keep" hidden>Next read: X2 at the rim →</a>
 <div id="phase" role="status" aria-live="polite"></div>
 </div>
-<div class="legend"><span><b class="ballkey"></b>Ball</span><span><b class="watch"></b>X3 and direction of travel</span><span><b class="target"></b>1, target shooter</span></div>
+<div class="legend"><span><b class="ballkey"></b>Ball</span><span><b class="watch"></b><span id="watched-label">X3 and direction of travel</span></span><span><b class="target"></b><span id="target-label">1, target shooter</span></span></div>
 <p id="sharing" aria-live="polite"></p>
-<details class="panel evidence"><summary>Where the read comes from</summary><p>FIBA’s March 2024 Tenerife–Jerusalem breakdown describes Bruno Fitipaldo attacking a closeout with one dribble. The defender recovering to the corner stepped back toward the drive. These courts apply that timing to our corner catch, with shooter 1 above the break. The paths and the keep-driving option are drawn teaching examples. <a href="https://www.fiba.basketball/en/news/23-24-news-games-within-games-lenovo-tenerife-vs-hapoel-bank-yahav-jerusalem">Read FIBA’s breakdown</a>.</p></details>
+<details class="panel evidence"><summary>Where the read comes from</summary><p>FIBA’s March 2024 Tenerife–Jerusalem breakdown describes Bruno Fitipaldo attacking a closeout with one dribble. The defender recovering to the corner stepped back toward the drive. These courts apply that timing to our corner catch, with shooter 1 above the break. The X2 help and stay decisions extend the baseline drive as a drawn coaching example. <a href="https://www.fiba.basketball/en/news/23-24-news-games-within-games-lenovo-tenerife-vs-hapoel-bank-yahav-jerusalem">Read FIBA’s breakdown</a>.</p></details>
 <noscript>Enable JavaScript to play the two courts.</noscript>
 </main></body></html>
