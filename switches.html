@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
 <title>Attacking the switch · Coaching board</title>
-<link rel="stylesheet" href="switches.css">
-<script defer src="five-twice.js"></script><script defer src="switch-frames.js"></script><script defer src="hunt-rotation.js"></script><script defer src="cluj-stagger.js?v=finish1"></script><script defer src="court.js?v=stagger1"></script><script defer src="switches.js?v=stagger1"></script>
+<link rel="stylesheet" href="switches.css?v=wing2">
+<script defer src="five-twice.js"></script><script defer src="switch-frames.js"></script><script defer src="hunt-rotation.js"></script><script defer src="cluj-stagger.js?v=wing2"></script><script defer src="court.js?v=wing2"></script><script defer src="switches.js?v=wing2"></script>
 </head>
 <body>
 <header><div class="wrap bar"><a class="brand" href="coach.html"><span class="logo" aria-hidden="true">CO</span> Coaching playbook</a><button id="share">Share this beat</button></div></header>
@@ -20,12 +20,25 @@
 </svg></div>
 <div id="controls"><button class="primary" id="play">Play to the read</button><button id="prev">← Back</button><button id="next">Next beat →</button></div>
 <div><a id="stagger-finish" hidden href="#stagger/reject/4">Play the stagger finish from this catch →</a></div>
+<div id="catch-looks" hidden>
+<p>Compare the defense on 3’s catch</p>
+<a href="#stagger/shooter/8">X3 late</a>
+<a href="#stagger/closeout/8">X3 running high</a>
+<a href="#stagger/reverse/8">X3 square, X5 in the lane</a>
+</div>
 <div id="beats" aria-label="Jump to a beat"></div>
 <div class="legend"><span><b class="offkey"></b>Offense</span><span><b class="defkey"></b>Defense</span><span><b class="ballkey"></b>Ball</span></div>
 </section>
 <aside>
 <div class="panel readout" aria-live="polite" aria-atomic="true"><div id="count" class="kicker"></div><h2 id="moment"></h2><p id="cue"></p></div>
 <div class="panel instruction"><div class="kicker">Timeout call</div><p id="timeout"></p><div class="kicker">Who to involve</div><p id="matchup"></p></div>
+<details id="stagger-audit" class="panel" hidden><summary>How effective is the stagger?</summary>
+<p><strong>Where I’d call it.</strong> Run it after the first Cluj action stalls and there is time for 3 to cross the floor. Against a chasing defender, 3 can shoot or turn a hard closeout into a paint touch. A downhill 1 on the empty side gives the defense another threat if 3 is covered.</p>
+<p><strong>The shot and the pass.</strong> The original wing spot was about 32 feet from the rim. 3 now turns back toward the arc for a catch about 24 feet out. Only take it if that is a practiced shot. The pass is still about 36 feet. If a defender gets a hand in that diagonal, 1 keeps the ball and uses 4.</p>
+<p><strong>Where it breaks down.</strong> A clean switch at the second screen can put X2 on 3 before the catch. If X3 denies the high exit, a backcut needs a clear rim and passing lane. 1 waits for that cut to clear before rejecting. If 5 cannot draw X5 out, expect help at the rim. A square closeout with X5 inside favors moving it to 4.</p>
+<p><strong>Test it in practice.</strong> Alternate this set and your usual second action with the same lineups and starting clock. Have the defense chase, switch or deny the exit. For every call, log coverage, whether 3 caught in range, the first clean look (uncontested shot in range, rim attempt or shooting foul), turnovers and total points through the end of the possession. Compare clean looks per call and points per possession by coverage, including denied catches. Record the number of calls in each group.</p>
+<p>These are drawn reads. Team possessions measured here: 0. FIBA describes a related stagger and ghost combination by Unicaja against Dijon; that play ended in a lob. WABC shows how a defense can cover a stagger. <a href="https://www.fiba.basketball/en/news/bcl-22-23-news-tactics-board-qualified">Unicaja example</a> · <a href="https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-manual-level-2-eng.pdf">WABC Level 2, defending staggered screens §1.2.3</a></p>
+</details>
 <details class="panel"><summary>Coaching notes &amp; sources</summary><div id="notes"></div></details>
 </aside></div>
 <div id="sharing" role="status"></div>

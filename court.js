@@ -44,10 +44,21 @@ function createCourt(root, prefix='',fullCourt=false){
     if(giver!==b.holder){
       const [first,last]=b.pass||[.15,.9]
       const v=from===to?1:clamp((u-first)/(last-first))
-      ball=mix(pts[giver],pts[b.holder],v)
-      part('pass').setAttribute('d',u>=first?'M'+fmt(pts[giver])+' L'+fmt(pts[b.holder]):'')
+      const target=b.leadPass ? b.p[b.holder] : pts[b.holder]
+      ball=mix(pts[giver],target,v)
+      part('pass').setAttribute('d',u>=first?'M'+fmt(pts[giver])+' L'+fmt(target):'')
     }else part('pass').setAttribute('d','')
-    part('ball').setAttribute('transform','translate('+fmt([ball[0]+1.05,ball[1]-.85])+')')
+    let ballCenter=[ball[0]+1.05,ball[1]-.85]
+    if(b.shot){
+      const [release,arrival]=b.shot
+      const flight=from===to?1:clamp((u-release)/(arrival-release))
+      const rim=[25,5.25]
+      if(flight>0){
+        part('pass').setAttribute('d','M'+fmt(ballCenter)+' L'+fmt(rim))
+        ballCenter=mix(ballCenter,rim,flight)
+      }
+    }
+    part('ball').setAttribute('transform','translate('+fmt(ballCenter)+')')
   }
   function paths(frames,i){
     const b=frames[i],a=frames[Math.max(i-1,0)]

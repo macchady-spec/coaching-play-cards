@@ -32,10 +32,46 @@ function clujStagger(reset) {
 
   const shooter = beat('X3 trails and nobody takes 3',
     '3 clears 2’s outside shoulder above the break. X3 is still inside the stagger and X2 stays with 2. 1 sees the open left wing before starting the drive.',
-    cross, {...exits, o4:[35.2,30.4], x1:[37.9,30.4], x2:[9.8,22]}, 0, exitTiming)
-  const catchThree = beat('Throw across to 3',
-    '1 passes across the top to 3 with feet ready. 5 stays high and 2 holds space below the pass. If a defender arrives in time, 3 can move the ball.',
-    shooter, {x3:[10.6,27.4]}, 2, {pass:[.06,.78], curves:{7:[13.8,27]}})
+    cross, {...exits, o4:[35.2,29.1], x1:[38.2,29.5], x2:[9.8,22]}, 0, exitTiming)
+  // 3 turns the corner of the second screen. The earlier exit is nearly 32 ft
+  // out; all three catches use the same lead pass to a spot near the left arc.
+  const catchSpacing = {
+    o2:[12,31.4], o3:[6,20.5], o4:[25,32.5], o5:[19.8,22.2],
+    x1:[38.8,29.4], x2:[13.5,28.6]
+  }
+  function wingCatch(title, cue, defense, closerPath) {
+    return beat(title, cue, shooter, {...catchSpacing, ...defense}, 2, {
+      pass:[.19,1], leadPass:true, watch:[7],
+      curves:{1:[8,29], 2:[2.9,24.3], 3:[31.7,33.2], 6:[8.4,16.7], 7:closerPath, 8:[29.8,24.6]},
+      windows:{1:[.04,.86], 2:[0,.95], 3:[.48,.99], 6:[.11,.76], 7:[.13,1]}
+    })
+  }
+  const late = wingCatch('Catch · X3 is still chasing',
+    '3 comes back toward the arc for 1’s pass. X3 is still above the catch and cannot contest an immediate release. 4 has lifted to the top. If this is 3’s practiced range, shoot now.',
+    {x3:[9.2,26.6], x4:[26.7,27.1], x5:[19.1,20.1]}, [11,29.2])
+  const jumper = beat('3 shoots off the catch',
+    '3 goes straight up before X3 can close the gap. 1 stays high for safety and 4 balances the top. The board shows the shot attempt.',
+    late, {x3:[8.4,23.7]}, 2, {shot:[.06,.95]})
+
+  const hard = wingCatch('Catch · X3 is running high',
+    'X3 sprints across 3’s high shoulder to take away the shot. The baseline side is open and X5 stays high with 5. Rip the ball low and take the first dribble past X3.',
+    {x3:[6.6,23], x4:[26.7,27.1], x5:[19.1,20.1]}, [9.5,29.5])
+  const beatCloseout = beat('Attack the baseline shoulder',
+    '3 beats X3 on the baseline side. X3 runs past the catch and turns to chase. 2 stays lifted, 4 holds the top and X5 is still attached to 5. The next open space is toward the rim.',
+    hard, {o3:[9.1,12.4], x3:[5.8,15.9], x5:[19.2,19.9]}, 2,
+    {curves:{2:[5.1,16.2], 7:[3.8,20.9]}, watch:[7,9]})
+  const rim = beat('3 reaches the near side of the rim',
+    'No low defender gets across. 3 turns the corner for a left-side layup. If X5 had stepped across earlier, 5 would be the outlet above the lane.',
+    beatCloseout, {o3:[21.9,7.4], x3:[17.6,10.4], x5:[20.1,17.1]}, 2,
+    {curves:{2:[14.3,7.3],7:[11.5,11]}, windows:{2:[0,.72]}, shot:[.76,1]})
+
+  const balanced = wingCatch('Catch · X3 is square and X5 is inside',
+    'X3 arrives between 3 and the rim on balance. X5 has stepped down from 5 into the driving lane. X4 is at the nail with a long recovery to 4. Reverse before that recovery starts.',
+    {x3:[8.8,17.8], x4:[23.4,20.6], x5:[14.1,14.2]}, [12.7,16.3])
+  const reverse = beat('4 catches the reversal at the top',
+    '3 passes back up to 4. X4 has to close from the nail. 4 can shoot in range or attack that closeout. 1 stays wide right so the next drive has room.',
+    balanced, {x3:[8.5,18], x4:[24.1,25.8], x1:[36,28.9]}, 3,
+    {pass:[.06,1], watch:[8]})
 
   const solid = beat('X1 sits on the empty side',
     'X2 picks up 3 as X3 takes 2. X1 shades to 1’s right to close the reject. 4 plants on the inside, leaving 1 room to come across 4’s high shoulder toward the middle.',
@@ -100,7 +136,9 @@ function clujStagger(reset) {
     headings:['Choose the matchup','2 screens for 4','2 flares off 5','The defense recovers','4 reverses to 1'],
     options:[
       read('reject','4 ghosts · X1 leans middle → reject right',[ghost,turnCorner,finish],[4,7,8]),
-      read('shooter','X3 trails the stagger → hit 3',[shooter,catchThree],[4,7]),
+      read('shooter','3 catches · X3 late → shoot',[shooter,late,jumper],[4,7,8]),
+      read('closeout','3 catches · X3 flies high → drive',[shooter,hard,beatCloseout,rim],[4,7,8,9]),
+      read('reverse','3 catches · X3 square, X5 inside → reverse',[shooter,balanced,reverse],[4,7,8]),
       read('screen','X1 closes the reject → use 4’s screen',[solid,useScreen,pullUp],[4,7,8]),
       read('help','1 rejects · X5 sinks → find 5',[ghost,sink,help,hitFive],[4,7,9]),
       read('pop','1 rejects · X4 contains → throw back to 4',[ghost,twoOnBall,hitFour],[4,7,8])

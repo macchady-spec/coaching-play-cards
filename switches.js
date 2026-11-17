@@ -95,6 +95,19 @@ function controls(){
     continuation.hidden = !(play.id === 'screen' && option.id === 'reset' && at === frames.length-1 && !running)
   }
   ref('play').textContent=running?'Pause':progress>0?'Resume':at===frames.length-1?'Replay':at===0?'Play to the read':'Continue'
+  const catchLooks = ref('catch-looks')
+  if (catchLooks) {
+    const wingRead = play.id === 'stagger' && ['shooter','closeout','reverse'].includes(option.id)
+    catchLooks.hidden = !wingRead || at < 7
+    for (const link of catchLooks.querySelectorAll('a')) {
+      if (link.hash === beatHash()) link.setAttribute('aria-current','step')
+      else link.removeAttribute('aria-current')
+    }
+    if (wingRead && !running && !progress) {
+      if (at === 7) ref('play').textContent = 'Play the pass to 3'
+      if (at === 8) ref('play').textContent = 'Play 3’s read'
+    }
+  }
   ref('prev').disabled=at===0&&!progress&&!running
   ref('next').disabled=at===frames.length-1
   Array.from(ref('beats').children).forEach((button,i)=>{
@@ -131,6 +144,7 @@ function select(selected,branch,i){
   if(!courtView || fullCourt!==Boolean(play.fullCourt)){
     fullCourt=Boolean(play.fullCourt);courtView=createCourt(ref('court'),'',fullCourt)
   }
+  if (ref('stagger-audit')) ref('stagger-audit').hidden = play.id !== 'stagger'
   if(ref('legend-teams'))ref('legend-teams').textContent=play.legend || 'Numbers attack the top basket. Xs defend.'
   Array.from(ref('plays').children).forEach((b,n)=>b.setAttribute('aria-pressed',plays[n]===play))
   ref('read').replaceChildren(...play.options.map(o=>new Option(o.label,o.id,false,o===option)))
