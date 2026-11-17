@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
+<title>Attacking the switch · Coaching board</title>
+<link rel="stylesheet" href="switches.css">
+<script defer src="five-twice.js"></script><script defer src="switch-frames.js"></script><script defer src="switches.js"></script>
+</head>
+<body>
+<header><div class="wrap bar"><a class="brand" href="index.html"><span class="logo" aria-hidden="true">CO</span> Coaching board</a><button id="share">Share this beat</button></div></header>
+<main class="wrap">
+<h1>Attacking the switch</h1>
+<nav id="plays" aria-label="Choose a play"></nav>
+<div class="layout">
+<section aria-label="Play animation">
+<div class="tools"><label for="read" id="read-label">Defensive response</label><select id="read"></select></div>
+<div class="floor">
+<svg id="court" viewBox="-6 -6 512 480" role="img" aria-labelledby="court-title court-desc">
+<title id="court-title">Five-on-five coaching court</title><desc id="court-desc"></desc>
+<defs><pattern id="wood" width="100" height="36" patternUnits="userSpaceOnUse"><path d="M0 0H100M65 0V18M0 18H100M15 18V36" fill="none" stroke="#decba8" stroke-width="1"/></pattern></defs>
+<rect width="500" height="470" fill="#f7e7ca"/><rect width="500" height="470" fill="url(#wood)"/>
+<g fill="none" stroke="#a89577" stroke-width="2"><rect x="1" y="1" width="498" height="468"/><path d="M170 0V190H330V0" fill="#e7d5b6"/><circle cx="250" cy="190" r="60"/><path d="M30 0V140 A237.5 237.5 0 0 0 470 140V0 M210 51 A40 40 0 0 0 290 51 M190 470 A60 60 0 0 1 310 470"/></g><path d="M220 40H280" stroke="#74482b" stroke-width="4"/><circle cx="250" cy="52.5" r="8" stroke="#a85320" stroke-width="3" fill="none"/>
+<g id="trails"></g><path id="pass" stroke="#763c09" stroke-width="2.5" stroke-dasharray="5 4" fill="none"/><g id="actors"></g><g id="ball" aria-hidden="true"><circle r="5.9" fill="#ffbb4d" stroke="#3b2b18" stroke-width="1.8"/><path d="M-5 2Q0 -2 5 -2" fill="none" stroke="#57300c" stroke-width="1"/></g>
+</svg></div>
+<div id="controls"><button class="primary" id="play">Play to the read</button><button id="prev">← Back</button><button id="next">Next beat →</button></div>
+<div id="beats" aria-label="Jump to a beat"></div>
+<div class="legend"><span><b class="offkey"></b>Offense</span><span><b class="defkey"></b>Defense</span><span><b class="ballkey"></b>Ball</span></div>
+</section>
+<aside>
+<div class="panel readout" aria-live="polite" aria-atomic="true"><div id="count" class="kicker"></div><h2 id="moment"></h2><p id="cue"></p></div>
+<div class="panel instruction"><div class="kicker">Timeout call</div><p id="timeout"></p><div class="kicker">Who to involve</div><p id="matchup"></p></div>
+<details class="panel"><summary>Coaching notes &amp; sources</summary><div id="notes"></div></details>
+</aside></div>
+<div id="sharing" role="status"></div>
+<noscript>Enable JavaScript to play the animated court.</noscript>
+</main></body></html>
